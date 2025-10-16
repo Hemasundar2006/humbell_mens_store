@@ -15,8 +15,6 @@ const Shop = () => {
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
     gender: 'men',
-    minPrice: searchParams.get('minPrice') || '',
-    maxPrice: searchParams.get('maxPrice') || '',
   });
 
   useEffect(() => {
@@ -43,8 +41,6 @@ const Shop = () => {
     setFilters({
       category: '',
       gender: 'men',
-      minPrice: '',
-      maxPrice: '',
     });
     setSearchParams({ gender: 'men' });
   };
@@ -117,28 +113,7 @@ const Shop = () => {
 
                 {/* Gender locked to men - hidden */}
 
-                {/* Price Range */}
-                <div>
-                  <h3 className="text-sm font-semibold text-primary-900 dark:text-white uppercase tracking-wider mb-3">
-                    Price Range
-                  </h3>
-                  <div className="space-y-3">
-                    <input
-                      type="number"
-                      placeholder="Min"
-                      value={filters.minPrice}
-                      onChange={(e) => handleFilterChange('minPrice', e.target.value)}
-                      className="w-full px-3 py-2 border border-primary-300 dark:border-primary-700 rounded-lg bg-white dark:bg-primary-800 text-primary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={filters.maxPrice}
-                      onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                      className="w-full px-3 py-2 border border-primary-300 dark:border-primary-700 rounded-lg bg-white dark:bg-primary-800 text-primary-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    />
-                  </div>
-                </div>
+                {/* Price Range removed for Menswear */}
 
                 {/* Clear Filters */}
                 <button

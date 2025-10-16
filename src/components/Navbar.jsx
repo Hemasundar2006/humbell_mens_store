@@ -154,6 +154,12 @@ const Navbar = () => {
               Menswear
             </Link>
             <Link
+              to="/accessories"
+              className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
+            >
+              Accessories
+            </Link>
+            <Link
               to="/sale"
               className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-300 hover:-translate-y-0.5 blink-blue-text"
             >
@@ -181,7 +187,14 @@ const Navbar = () => {
 
           {/* Right Icons */}
           <div className="flex items-center space-x-4">
-            {/* Theme Toggle removed */}
+            {/* Theme Toggle - Desktop Only */}
+            <button
+              onClick={toggleTheme}
+              className="hidden md:flex p-2 text-primary-700 dark:text-primary-200 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+            </button>
 
             {/* User Menu */}
             {user ? (
@@ -259,6 +272,13 @@ const Navbar = () => {
               className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
             >
               Menswear
+            </Link>
+            <Link
+              to="/accessories"
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              Accessories
             </Link>
             <Link
               to="/about"

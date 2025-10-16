@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { calculateTotal } from './features/cart/cartSlice';
@@ -22,6 +22,7 @@ import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
+import Accessories from './pages/Accessories';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
@@ -67,6 +68,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/sale" element={<Sale />} />
+            <Route path="/accessories" element={<Accessories />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/privacy" element={<Privacy />} />

@@ -36,6 +36,12 @@ const LoginPrompt = () => {
     navigate('/login');
   };
 
+  const handleRegister = () => {
+    sessionStorage.setItem(STORAGE_KEY, '1');
+    setOpen(false);
+    navigate('/register');
+  };
+
   if (!open) return null;
 
   return (
@@ -59,12 +65,18 @@ const LoginPrompt = () => {
             Login
           </button>
           <button
-            onClick={handleClose}
+            onClick={handleRegister}
             className="flex-1 border border-primary-300 dark:border-primary-700 text-primary-900 dark:text-white py-3 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-800"
           >
-            Not now
+            Register
           </button>
         </div>
+        <button
+          onClick={handleClose}
+          className="mt-4 w-full text-sm text-primary-700 dark:text-primary-300 hover:underline"
+        >
+          Maybe later
+        </button>
       </div>
     </div>
   );
