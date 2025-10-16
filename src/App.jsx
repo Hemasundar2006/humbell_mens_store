@@ -26,6 +26,7 @@ import Accessories from './pages/Accessories';
 import NotFound from './pages/NotFound';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Orders from './pages/Orders';
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ function App() {
             <Route path="/sale" element={<Sale />} />
             <Route path="/accessories" element={<Accessories />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

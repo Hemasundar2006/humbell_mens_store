@@ -101,11 +101,11 @@ const Navbar = () => {
 
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 bg-transparent ${
-      scrolled ? 'backdrop-blur-sm bg-white/70 dark:bg-primary-900/70 shadow-lg' : ''
+      scrolled ? 'backdrop-blur-sm ' : ''
     }`}>
       {/* Announcement Bar */}
       <div className="bg-[#071018] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-8 flex items-center justify-center gap-2 announcement-ticker">
+        <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 h-8 flex items-center justify-center gap-2 announcement-ticker">
           <FiChevronLeft className="text-blue-300" size={14} />
           <span key={announcementIndex} className="text-[10px] sm:text-xs tracking-wider">
             {announcements[announcementIndex]}
@@ -117,7 +117,7 @@ const Navbar = () => {
       {/* Auth quick bar: Login (left) • Theme (center) • Register (right) */}
       {!user && (
         <div className="bg-white/60 dark:bg-primary-900/60 backdrop-blur-sm md:hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-10 grid grid-cols-3 items-center">
+          <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 h-10 grid grid-cols-3 items-center">
             <Link to="/login" onClick={() => setIsOpen(false)} className="justify-self-start text-sm font-medium text-primary-900 dark:text-white">Login</Link>
             <button
               onClick={toggleTheme}
@@ -131,8 +131,9 @@ const Navbar = () => {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-5xl mx-auto px-2 sm:px-4 lg:px-6">
+        <div className="rounded-2xl border border-white/40 dark:border-primary-700/60 bg-white/70 dark:bg-primary-900/70 shadow-lg backdrop-blur-md px-3 sm:px-4 lg:px-5">
+          <div className="flex justify-between items-center h-12">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
             <img src="/Humbell_logo.jpg" alt="Humbell" className="h-10 w-auto object-contain" />
@@ -140,7 +141,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               to="/"
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
@@ -186,7 +187,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {/* Theme Toggle - Desktop Only */}
             <button
               onClick={toggleTheme}
@@ -252,13 +253,14 @@ const Navbar = () => {
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-transparent backdrop-blur-sm">
-          <div className="px-4 pt-2 pb-4 space-y-2">
+          <div className="px-2 pt-2 pb-4 space-y-2">
             <Link
               to="/"
               onClick={() => setIsOpen(false)}
