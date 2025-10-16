@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 🛍️ Humbell - Modern Fashion E-Commerce Frontend
 
 A beautiful, fully responsive fashion e-commerce frontend built with React, Tailwind CSS, Redux Toolkit, and React Router v6. Inspired by modern fashion brands like Zara, H&M, and Urbanic.
@@ -302,3 +303,6 @@ For questions or support, please open an issue in the repository.
 =======
 # Humbell-Mens-Store
 >>>>>>> 57afc227a4c2b2f4a2fa7d6ad20dd733f20dbaf6
+=======
+# Humbell-Mens-Store
+>>>>>>> 57afc22 (Initial commit)
