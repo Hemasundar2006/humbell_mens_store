@@ -192,6 +192,25 @@
   color: transparent;
 }
 
+/* Brand name slow right-to-left animation */
+@keyframes brandScrollLeft {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.brand-animated-rtl {
+  background-image: linear-gradient(90deg, #0ea5e9, #2563eb, #1e40af);
+  background-size: 200% 200%;
+  animation: brandScrollLeft 12s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* Hover pill background animation for navbar items */
 .nav-pill {
   position: relative;
@@ -343,6 +362,37 @@
 
 .animate-line-slide {
   animation: lineSlide 6s linear infinite;
+}
+
+/* Vertical marquee for testimonials */
+@keyframes marqueeY {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marqueeYReverse {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.vertical-marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.vertical-marquee-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 16px */
+  animation: marqueeY 20s linear infinite;
+}
+
+.vertical-marquee-inner.reverse {
+  animation-name: marqueeYReverse;
+}
+
+.vertical-marquee:hover .vertical-marquee-inner {
+  animation-play-state: paused;
 }
 
 /* Staggered Animation Delays */

@@ -146,21 +146,34 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials with vertical marquee */}
       <section className="py-16 bg-white dark:bg-primary-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-display font-bold text-center text-primary-900 dark:text-white mb-12">What our customers say</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: 'Arjun', text: 'Great fit and quality. My go-to menswear store now.' },
-              { name: 'Rahul', text: 'Fast delivery and the chinos are perfect for daily wear.' },
-              { name: 'Karthik', text: 'Minimal designs, excellent fabrics. Highly recommend.' },
-            ].map((t) => (
-              <div key={t.name} className="p-6 rounded-xl border border-primary-200 dark:border-primary-700 bg-white dark:bg-primary-900 shadow-sm">
-                <div className="text-primary-700 dark:text-primary-200">“{t.text}”</div>
-                <div className="mt-4 font-semibold text-primary-900 dark:text-white">— {t.name}</div>
-              </div>
-            ))}
+            {[0,1,2].map((col) => {
+              const testimonials = [
+                { name: 'Arjun', text: 'Great fit and quality. My go-to menswear store now.' },
+                { name: 'Rahul', text: 'Fast delivery and the chinos are perfect for daily wear.' },
+                { name: 'Karthik', text: 'Minimal designs, excellent fabrics. Highly recommend.' },
+                { name: 'Vikram', text: 'The jackets are top-notch and very comfortable.' },
+                { name: 'Neeraj', text: 'Customer support was quick and helpful.' },
+                { name: 'Sameer', text: 'Great value for money. Will shop again!' },
+              ];
+              const loop = [...testimonials, ...testimonials];
+              return (
+                <div key={col} className="vertical-marquee h-80">
+                  <div className={`vertical-marquee-inner ${col % 2 === 1 ? 'reverse' : ''}`}>
+                    {loop.map((t, idx) => (
+                      <div key={`${t.name}-${idx}`} className="p-6 rounded-xl border border-primary-200 dark:border-primary-700 bg-white dark:bg-primary-900 shadow-sm">
+                        <div className="text-primary-700 dark:text-primary-200">“{t.text}”</div>
+                        <div className="mt-4 font-semibold text-primary-900 dark:text-white">— {t.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

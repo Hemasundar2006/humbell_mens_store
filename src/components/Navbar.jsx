@@ -136,7 +136,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
             <img src="/Humbell_logo.jpg" alt="Humbell" className="h-10 w-auto object-contain" />
-            <span className="text-xl md:text-2xl font-display font-bold text-primary-900 dark:text-white">HUMBELL</span>
+            <span className="text-xl md:text-2xl font-display font-bold text-primary-900 dark:text-white brand-animated-rtl">HUMBELL</span>
           </Link>
 
           {/* Desktop Navigation */}
