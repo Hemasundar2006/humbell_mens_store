@@ -166,6 +166,12 @@ const Navbar = () => {
             >
               Sale
             </Link>
+            {/* <Link
+              to="/subscriptions"
+              className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
+            >
+              Subscriptions
+            </Link> */}
             <Link
               to="/about"
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
@@ -178,16 +184,25 @@ const Navbar = () => {
             >
               Blog
             </Link> */}
-            <Link
+            {/* <Link
               to="/contact"
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
             >
               Contact
-            </Link>
+            </Link> */}
           </div>
 
           {/* Right Icons */}
           <div className="flex items-center space-x-3">
+            {/* Subscriptions Icon - Desktop Only */}
+            <Link
+              to="/subscriptions"
+              className="hidden md:flex p-2 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
+              aria-label="Subscriptions"
+            >
+              <span className="text-xl">⭐</span>
+            </Link>
+
             {/* Theme Toggle - Desktop Only */}
             <button
               onClick={toggleTheme}
@@ -309,6 +324,13 @@ const Navbar = () => {
               className="block px-3 py-2 text-base font-semibold text-blue-600 dark:text-blue-400 hover:bg-white/10 rounded-lg transition-colors blink-blue-text"
             >
               Sale
+            </Link>
+            <Link
+              to="/subscriptions"
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              Subscriptions
             </Link>
             
             {/* {user ? (
