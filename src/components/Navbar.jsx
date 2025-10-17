@@ -11,6 +11,8 @@ const Navbar = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const [sidebarWidth, setSidebarWidth] = useState('100%');
+  const [showMenswearMenu, setShowMenswearMenu] = useState(false);
+  const [menswearMenuTimeout, setMenswearMenuTimeout] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -71,6 +73,15 @@ const Navbar = () => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isOpen]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (menswearMenuTimeout) {
+        clearTimeout(menswearMenuTimeout);
+      }
+    };
+  }, [menswearMenuTimeout]);
 
   useEffect(() => {
     if (!user) {
@@ -297,12 +308,24 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/shop?gender=men"
+            <button
+              onMouseEnter={() => {
+                if (menswearMenuTimeout) {
+                  clearTimeout(menswearMenuTimeout);
+                  setMenswearMenuTimeout(null);
+                }
+                setShowMenswearMenu(true);
+              }}
+              onMouseLeave={() => {
+                const timeout = setTimeout(() => {
+                  setShowMenswearMenu(false);
+                }, 150);
+                setMenswearMenuTimeout(timeout);
+              }}
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
             >
               Menswear
-            </Link>
+            </button>
             <Link
               to="/accessories"
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
@@ -394,6 +417,142 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Desktop Mega Menu */}
+      {showMenswearMenu && (
+        <div 
+          className="hidden md:block absolute top-full left-0 w-full bg-white dark:bg-primary-900 shadow-2xl border-t border-gray-200 dark:border-primary-700 z-40"
+          onMouseEnter={() => {
+            if (menswearMenuTimeout) {
+              clearTimeout(menswearMenuTimeout);
+              setMenswearMenuTimeout(null);
+            }
+            setShowMenswearMenu(true);
+          }}
+          onMouseLeave={() => {
+            const timeout = setTimeout(() => {
+              setShowMenswearMenu(false);
+            }, 150);
+            setMenswearMenuTimeout(timeout);
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="grid grid-cols-5 gap-8">
+              {/* Column 1 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">SHIRTS</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/shirts/formal" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Formal Shirts</Link></li>
+                    <li><Link to="/shop/shirts/casual" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Casual Shirts</Link></li>
+                    <li><Link to="/shop/shirts/monogrammable" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Monogrammable Shirts</Link></li>
+                    <li><Link to="/shop/shirts/ceremonial" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Ceremonial Shirts</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">BOTTOM WEAR</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/trousers/formal" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Formal Trousers</Link></li>
+                    <li><Link to="/shop/trousers/casual" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Casual Trousers</Link></li>
+                    <li><Link to="/shop/chinos" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Chinos</Link></li>
+                    <li><Link to="/shop/shorts" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Shorts</Link></li>
+                    <li><Link to="/shop/cargos" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Cargos</Link></li>
+                    <li><Link to="/shop/joggers" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Jogger And Track Pants</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">PLUS SIZE STORE</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/plus-size/shirts" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Shirts</Link></li>
+                    <li><Link to="/shop/plus-size/t-shirts" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">T-Shirts</Link></li>
+                    <li><Link to="/shop/plus-size/trousers" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Trousers</Link></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Column 2 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">T SHIRTS</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/t-shirts/polo" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Polo T-Shirts</Link></li>
+                    <li><Link to="/shop/t-shirts/crew-neck" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Crew Neck T-Shirts</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">JEANS</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/jeans/slim-fit" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Slim Fit Jeans</Link></li>
+                    <li><Link to="/shop/jeans/super-slim" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Super Slim Fit Jeans</Link></li>
+                    <li><Link to="/shop/jeans/regular-fit" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Regular Fit Jeans</Link></li>
+                    <li><Link to="/shop/jeans/smart-fit" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Smart Fit Jeans</Link></li>
+                    <li><Link to="/shop/jeans/slim-tapered" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Slim Tapered Fit Jeans</Link></li>
+                    <li><Link to="/shop/jeans/ath-fit" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Ath Fit Jeans</Link></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Column 3 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">SUITS</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/suits/formal" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Formal Suits</Link></li>
+                    <li><Link to="/shop/suits/wedding-party" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Wedding & Party Wear Suits</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">ETHNIC WEAR</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/ethnic/nehru-jackets" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Nehru Jackets</Link></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Column 4 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">BLAZERS</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/blazers/formal" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Formal Blazers</Link></li>
+                    <li><Link to="/shop/blazers/casual" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Casual Blazers</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">FOOTWEAR</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/footwear/formal" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Formal Shoes</Link></li>
+                    <li><Link to="/shop/footwear/casual" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Casual Shoes</Link></li>
+                    <li><Link to="/shop/footwear/sneakers" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Sneakers</Link></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Column 5 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">WINTERWEAR</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/winterwear/jackets" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Jackets</Link></li>
+                    <li><Link to="/shop/winterwear/sweatshirts" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Sweatshirts</Link></li>
+                    <li><Link to="/shop/winterwear/sweaters" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Sweaters</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4">ACCESSORIES</h3>
+                  <ul className="space-y-2">
+                    <li><Link to="/shop/accessories/belts" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Belts</Link></li>
+                    <li><Link to="/shop/accessories/wallets" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Wallets</Link></li>
+                    <li><Link to="/shop/accessories/combo-boxes" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Combo Boxes</Link></li>
+                    <li><Link to="/shop/accessories/ties" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Ties</Link></li>
+                    <li><Link to="/shop/accessories/pocket-squares" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Pocket Squares</Link></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {isOpen && (
