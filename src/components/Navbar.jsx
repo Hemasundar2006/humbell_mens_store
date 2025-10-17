@@ -438,71 +438,320 @@ const Navbar = () => {
               <div className="p-4">
                 <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-3">Shop by Category</h3>
                 <div className="grid grid-cols-3 gap-4 mb-6">
-                  <Link to="/shop?category=jeans" onClick={closeSidebar} className="text-center">
+                  <Link to="/shop/t-shirts" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">👕</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/shirts" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">👔</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Shirts</span>
+                  </Link>
+                  <Link to="/shop/jeans" onClick={closeSidebar} className="text-center">
                     <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
                       <span className="text-2xl">👖</span>
                     </div>
                     <span className="text-xs font-medium text-gray-800 dark:text-white">Jeans</span>
                   </Link>
-                  <Link to="/shop?category=pants" onClick={closeSidebar} className="text-center">
-                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
-                      <span className="text-2xl">👔</span>
-                    </div>
-                    <span className="text-xs font-medium text-gray-800 dark:text-white">Pants</span>
-                  </Link>
-                  <Link to="/shop?category=joggers" onClick={closeSidebar} className="text-center">
+                  <Link to="/shop/tracks" onClick={closeSidebar} className="text-center">
                     <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
                       <span className="text-2xl">🏃</span>
                     </div>
-                    <span className="text-xs font-medium text-gray-800 dark:text-white">Joggers</span>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Tracks</span>
                   </Link>
-                  <Link to="/shop?category=cargos" onClick={closeSidebar} className="text-center">
+                  <Link to="/shop/hoodies" onClick={closeSidebar} className="text-center">
                     <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
-                      <span className="text-2xl">🎒</span>
+                      <span className="text-2xl">🧥</span>
                     </div>
-                    <span className="text-xs font-medium text-gray-800 dark:text-white">Cargos</span>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Hoodies</span>
                   </Link>
-                  <Link to="/shop?category=sneakers" onClick={closeSidebar} className="text-center">
+                  <Link to="/shop/jackets" onClick={closeSidebar} className="text-center">
                     <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
-                      <span className="text-2xl">👟</span>
+                      <span className="text-2xl">🧥</span>
                     </div>
-                    <span className="text-xs font-medium text-gray-800 dark:text-white">Sneakers</span>
-                  </Link>
-                  <Link to="/accessories" onClick={closeSidebar} className="text-center">
-                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
-                      <span className="text-2xl">🎒</span>
-                    </div>
-                    <span className="text-xs font-medium text-gray-800 dark:text-white">All Accessories</span>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Jackets</span>
                   </Link>
                 </div>
               </div>
 
-              {/* Main Categories */}
+              {/* T-Shirts Categories */}
               <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">T-Shirts</h4>
                 <div className="space-y-1">
-            <Link
-                    to="/shop?category=topwear"
-                    onClick={closeSidebar}
-                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
-                  >
-                    <span className="font-medium">Topwear</span>
-                    <FiChevronRight size={16} />
+                  <Link to="/shop/t-shirts/polo-printed" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Polo Printed T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/t-shirts/round-neck-printed" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Round Neck Printed</span>
+                  </Link>
+                  <Link to="/shop/t-shirts/polo" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Polo T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/t-shirts/round-neck" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Round Neck T-Shirts</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Shirts Categories */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Shirts</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/shirts/plain" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👔</span>
+                    </div>
+                    <span>Plain Shirts</span>
+                  </Link>
+                  <Link to="/shop/shirts/office-wear" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👔</span>
+                    </div>
+                    <span>Office Wear Shirts</span>
+                  </Link>
+                  <Link to="/shop/shirts/printed" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👔</span>
+                    </div>
+                    <span>Printed Shirts</span>
+                  </Link>
+                  <Link to="/shop/shirts/check" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👔</span>
+                    </div>
+                    <span>Check Shirts</span>
+                  </Link>
+                  <Link to="/shop/shirts/streetwear" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👔</span>
+                    </div>
+                    <span>Streetwear Shirts</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Hoodies Categories */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Hoodies</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/hoodies/pullover" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Pullover Hoodie</span>
+                  </Link>
+                  <Link to="/shop/hoodies/zip-up" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Zip-Up Hoodies</span>
+                  </Link>
+                  <Link to="/shop/hoodies/sleeveless" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Sleeveless Hoodie</span>
+                  </Link>
+                  <Link to="/shop/hoodies/graphic" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Graphic Hoodie</span>
+                  </Link>
+                  <Link to="/shop/hoodies/fleece" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Fleece Hoodie</span>
+                  </Link>
+                  <Link to="/shop/hoodies/tech" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Tech Hoodie</span>
             </Link>
+                </div>
+              </div>
+
+              {/* Shorts Categories */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Shorts</h4>
+                <div className="space-y-1">
+                  {['Print', 'Plain', '3/4', 'Cargo', 'Board', 'Bermuda', 'Sweat', 'Running', 'Chino', 'Denim'].map((type) => (
             <Link
-                    to="/shop?category=bottomwear"
-                    onClick={closeSidebar}
-                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
-                  >
-                    <span className="font-medium">Bottomwear</span>
-                    <FiChevronRight size={16} />
-            </Link>
-            <Link
-              to="/accessories"
-                    onClick={closeSidebar}
-                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
-                  >
-                    <span className="font-medium">All Accessories</span>
-                    <FiChevronRight size={16} />
+                      key={type}
+                      to={`/shop/shorts/${type.toLowerCase()}`}
+                      onClick={closeSidebar}
+                      className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg"
+                    >
+                      <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                        <span className="text-sm">🩳</span>
+                      </div>
+                      <span>{type} Shorts</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Cargo Pants Categories */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Cargo Pants</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/cargo/classic" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Classic Cargo Pants</span>
+                      <span className="text-xs text-gray-500 block">Loose/Relaxed Fit</span>
+                    </div>
+                  </Link>
+                  <Link to="/shop/cargo/slim-fit" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <span>Slim Fit Cargoes</span>
+                  </Link>
+                  <Link to="/shop/cargo/tactical" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <span>Tactical Cargo</span>
+                  </Link>
+                  <Link to="/shop/cargo/jogger" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <span>Jogger Cargo</span>
+                  </Link>
+                  <Link to="/shop/cargo/chinos" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <span>Cargo Chinos</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Sports & Innerwear */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Sports & Innerwear</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/sportswear/t-shirts" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Sports T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/sportswear/tracks" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👖</span>
+                    </div>
+                    <span>Track Pants</span>
+                  </Link>
+                  <Link to="/shop/sportswear/shorts" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🩳</span>
+                    </div>
+                    <span>Sports Shorts</span>
+                  </Link>
+                  <Link to="/shop/sportswear/jackets" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🧥</span>
+                    </div>
+                    <span>Track Jackets</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Innerwear Categories */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Innerwear</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/innerwear/briefs" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🩲</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Briefs</span>
+                      <span className="text-xs text-gray-500 block">Snug Fit</span>
+                    </div>
+                  </Link>
+                  <Link to="/shop/innerwear/boxers" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🩲</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Boxers</span>
+                      <span className="text-xs text-gray-500 block">Loose Fit</span>
+                    </div>
+                  </Link>
+                  <Link to="/shop/innerwear/boxer-briefs" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🩲</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Boxer Briefs</span>
+                      <span className="text-xs text-gray-500 block">Best of Both</span>
+                    </div>
+                  </Link>
+                  <Link to="/shop/innerwear/trunks" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">🩲</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Trunks</span>
+                      <span className="text-xs text-gray-500 block">Shorter Version</span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Undershirts */}
+              <div className="px-4 pb-4">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Undershirts</h4>
+                <div className="space-y-1">
+                  <Link to="/shop/undershirts/tank-tops" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <div className="flex-1">
+                      <span>Tank Tops</span>
+                      <span className="text-xs text-gray-500 block">Sleeveless</span>
+                    </div>
+                  </Link>
+                  <Link to="/shop/undershirts/crew-neck" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Crew Neck T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/undershirts/v-neck" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>V-Neck T-Shirts</span>
+                  </Link>
+                  <Link to="/shop/undershirts/thermals" onClick={closeSidebar} className="flex items-center gap-3 py-2 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg">
+                    <div className="w-8 h-8 bg-gray-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                      <span className="text-sm">👕</span>
+                    </div>
+                    <span>Long Sleeve Thermals</span>
                   </Link>
                 </div>
               </div>
@@ -522,7 +771,7 @@ const Navbar = () => {
                       <span className="text-xl">🧢</span>
                     </div>
                     <span className="text-xs font-medium text-gray-800 dark:text-white">Caps</span>
-                  </Link>
+            </Link>
                   <Link to="/shop?category=belts" onClick={closeSidebar} className="text-center flex-shrink-0">
                     <div className="w-16 h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
                       <span className="text-xl">🪢</span>
