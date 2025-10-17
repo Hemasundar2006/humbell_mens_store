@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
-import { FiShoppingBag, FiUser, FiMenu, FiX, FiSun, FiMoon, FiChevronLeft, FiChevronRight, FiHeart } from 'react-icons/fi';
+import { FiShoppingBag, FiUser, FiMenu, FiX, FiSun, FiMoon, FiChevronLeft, FiChevronRight, FiHeart, FiSearch } from 'react-icons/fi';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
+  const [sidebarWidth, setSidebarWidth] = useState('100%');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,6 +40,37 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
+
+  // Prevent body scroll when sidebar is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Handle escape key to close sidebar
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeSidebar();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (!user) {
@@ -82,6 +116,22 @@ const Navbar = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleDragMove);
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchmove', handleDragMove);
+      document.addEventListener('touchend', handleDragEnd);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleDragMove);
+      document.removeEventListener('mouseup', handleDragEnd);
+      document.removeEventListener('touchmove', handleDragMove);
+      document.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [isDragging, dragStart]);
+
   const toggleTheme = () => {
     if (isDark) {
       document.documentElement.classList.remove('dark');
@@ -97,6 +147,35 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate('/');
+  };
+
+  const handleDragStart = (e) => {
+    setIsDragging(true);
+    setDragStart(e.clientX);
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging) return;
+    
+    const deltaX = e.clientX - dragStart;
+    const screenWidth = window.innerWidth;
+    const newWidth = Math.max(60, Math.min(100, (100 + (deltaX / screenWidth) * 100)));
+    setSidebarWidth(`${newWidth}%`);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    const widthPercent = parseFloat(sidebarWidth);
+    if (widthPercent > 80) {
+      setSidebarWidth('100%');
+    } else if (widthPercent < 70) {
+      setSidebarWidth('60%');
+    }
+  };
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+    setSidebarWidth('100%');
   };
 
   return (
@@ -131,7 +210,77 @@ const Navbar = () => {
         </div>
       )}
 
-      <div className="max-w-5xl mx-auto px-2 sm:px-4 lg:px-6">
+      {/* Mobile Navbar */}
+      <div className="md:hidden bg-white dark:bg-primary-900 border-b border-gray-300 dark:border-primary-700">
+        <div className="max-w-5xl mx-auto px-3">
+          <div className="flex items-center justify-between h-16">
+            {/* Left: Hamburger Menu */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg transition-colors flex-shrink-0"
+            >
+              {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+            </button>
+
+            {/* Center: Brand with Logo and Crown */}
+            <Link to="/" className="flex items-center gap-1.5 flex-1 justify-center">
+              <img src="/Humbell_logo.jpg" alt="Humbell" className="h-5 w-auto object-contain" />
+              {/* <span className="text-base">👑</span> */}
+              <span className="text-xs font-semibold text-gray-800 dark:text-white tracking-wide">HUMBELL</span>
+            </Link>
+
+            {/* Right: Action Icons */}
+            <div className="flex items-center space-x-0.5 flex-shrink-0">
+              {/* Search */}
+              <button className="p-1.5 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-full transition-colors">
+                <FiSearch size={18} />
+              </button>
+              
+              {/* Subscriptions */}
+              <Link
+                to="/subscriptions"
+                className="p-1.5 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-full transition-colors"
+                aria-label="Subscriptions"
+              >
+                <span className="text-base">⭐</span>
+              </Link>
+              
+              {/* Wishlist */}
+              <Link
+                to="/wishlist"
+                className="relative p-1.5 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-full transition-colors"
+              >
+                <FiHeart size={18} />
+              </Link>
+              
+              {/* Profile */}
+              <Link
+                to="/login"
+                className="p-1.5 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-full transition-colors"
+                aria-label="Profile"
+              >
+                <FiUser size={18} />
+              </Link>
+              
+              {/* Cart */}
+              <Link
+                to="/cart"
+                className="relative p-1.5 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-full transition-colors"
+              >
+                <FiShoppingBag size={18} />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-gray-800 dark:bg-white text-white dark:text-gray-800 text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Navbar */}
+      <div className="hidden md:block max-w-5xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="rounded-2xl border border-white/40 dark:border-primary-700/60 bg-white/70 dark:bg-primary-900/70 shadow-lg backdrop-blur-md px-3 sm:px-4 lg:px-5">
           <div className="flex justify-between items-center h-12">
           {/* Logo */}
@@ -166,47 +315,29 @@ const Navbar = () => {
             >
               Sale
             </Link>
-            {/* <Link
-              to="/subscriptions"
-              className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
-            >
-              Subscriptions
-            </Link> */}
             <Link
               to="/about"
               className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
             >
               About
             </Link>
-            {/* <Link
-              to="/blog"
-              className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
-            >
-              Blog
-            </Link> */}
-            {/* <Link
-              to="/contact"
-              className="text-sm font-medium text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-all duration-300 hover:-translate-y-0.5 nav-underline"
-            >
-              Contact
-            </Link> */}
-          </div>
+            </div>
 
-          {/* Right Icons */}
-          <div className="flex items-center space-x-3">
-            {/* Subscriptions Icon - Desktop Only */}
+            {/* Desktop Right Icons */}
+            <div className="hidden md:flex items-center space-x-3">
+              {/* Subscriptions Icon */}
             <Link
-              to="/subscriptions"
-              className="hidden md:flex p-2 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
-              aria-label="Subscriptions"
+                to="/subscriptions"
+                className="p-2 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
+                aria-label="Subscriptions"
             >
-              <span className="text-xl">⭐</span>
+                <span className="text-xl">⭐</span>
             </Link>
 
-            {/* Theme Toggle - Desktop Only */}
+              {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="hidden md:flex p-2 text-primary-700 dark:text-primary-200 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
+                className="p-2 text-primary-700 dark:text-primary-200 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:ring-0"
               aria-label="Toggle theme"
             >
               {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
@@ -214,7 +345,7 @@ const Navbar = () => {
 
             {/* User Menu */}
             {user ? (
-              <div className="hidden md:flex items-center space-x-4">
+                <div className="flex items-center space-x-4">
                 {user.isAdmin && (
                   <Link
                     to="/admin"
@@ -233,7 +364,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="hidden md:flex items-center space-x-1 text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-colors nav-underline"
+                  className="flex items-center space-x-1 text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-white transition-colors nav-underline"
               >
                 <FiUser size={20} />
               </Link>
@@ -259,14 +390,6 @@ const Navbar = () => {
             >
               <FiHeart size={20} />
             </Link>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-primary-700 dark:text-primary-200 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors focus:outline-none focus:ring-0 focus-visible:ring-0"
-            >
-              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
           </div>
           </div>
         </div>
@@ -274,95 +397,185 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-transparent backdrop-blur-sm">
-          <div className="px-2 pt-2 pb-4 space-y-2">
+        <div className="md:hidden fixed inset-0 z-50">
+          {/* Backdrop - positioned below navbar */}
+          <div 
+            className="absolute left-0 top-16 right-0 bottom-0 bg-black/50 transition-opacity"
+            onClick={closeSidebar}
+            onTouchEnd={closeSidebar}
+          />
+          
+          {/* Sidebar */}
+          <div 
+            className={`absolute left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-primary-900 shadow-2xl transition-all duration-300 ${
+              isDragging ? 'transition-none' : ''
+            }`}
+            style={{ width: sidebarWidth }}
+          >
+            {/* Drag Handle */}
+            <div 
+              className="absolute right-0 top-0 w-1 h-full bg-gray-300 dark:bg-primary-700 cursor-ew-resize hover:bg-gray-400 dark:hover:bg-primary-600 transition-colors"
+              onMouseDown={handleDragStart}
+              onTouchStart={handleDragStart}
+            />
+            
+            <div className="h-full overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-primary-700">
+                <div className="flex items-center gap-2">
+                  <img src="/Humbell_logo.jpg" alt="Humbell" className="h-6 w-auto object-contain" />
+                  <span className="text-sm font-semibold text-gray-800 dark:text-white">HUMBELL</span>
+                </div>
+                <button
+                  onClick={closeSidebar}
+                  className="p-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-primary-800 rounded-full"
+                >
+                  <FiX size={24} />
+                </button>
+              </div>
+
+              {/* Top Categories with Images */}
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-3">Shop by Category</h3>
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <Link to="/shop?category=jeans" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">👖</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Jeans</span>
+                  </Link>
+                  <Link to="/shop?category=pants" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">👔</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Pants</span>
+                  </Link>
+                  <Link to="/shop?category=joggers" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">🏃</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Joggers</span>
+                  </Link>
+                  <Link to="/shop?category=cargos" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">🎒</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Cargos</span>
+                  </Link>
+                  <Link to="/shop?category=sneakers" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">👟</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Sneakers</span>
+                  </Link>
+                  <Link to="/accessories" onClick={closeSidebar} className="text-center">
+                    <div className="w-full h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-2xl">🎒</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">All Accessories</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Main Categories */}
+              <div className="px-4 pb-4">
+                <div className="space-y-1">
             <Link
-              to="/"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Home
+                    to="/shop?category=topwear"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
+                  >
+                    <span className="font-medium">Topwear</span>
+                    <FiChevronRight size={16} />
             </Link>
             <Link
-              to="/shop?gender=men"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Menswear
+                    to="/shop?category=bottomwear"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
+                  >
+                    <span className="font-medium">Bottomwear</span>
+                    <FiChevronRight size={16} />
             </Link>
             <Link
               to="/accessories"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Accessories
-            </Link>
-            <Link
-              to="/about"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              to="/blog"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/contact"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/sale"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-semibold text-blue-600 dark:text-blue-400 hover:bg-white/10 rounded-lg transition-colors blink-blue-text"
-            >
-              Sale
-            </Link>
-            <Link
-              to="/subscriptions"
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-            >
-              Subscriptions
-            </Link>
-            
-            {/* {user ? (
-              <>
-                {user.isAdmin && (
-                  <Link
-                    to="/admin"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
                   >
-                    Admin
+                    <span className="font-medium">All Accessories</span>
+                    <FiChevronRight size={16} />
                   </Link>
-                )}
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-base font-medium text-primary-700 dark:text-primary-200 hover:bg-white/10 rounded-lg transition-colors"
-              >
-                Login
-              </Link>
-            )} */}
+                </div>
+              </div>
+
+              {/* Accessory Categories */}
+              <div className="px-4 pb-4">
+                <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-3">Accessories</h3>
+                <div className="flex space-x-4 overflow-x-auto pb-2">
+                  <Link to="/shop?category=socks" onClick={closeSidebar} className="text-center flex-shrink-0">
+                    <div className="w-16 h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-xl">🧦</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Socks</span>
+                  </Link>
+                  <Link to="/shop?category=caps" onClick={closeSidebar} className="text-center flex-shrink-0">
+                    <div className="w-16 h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-xl">🧢</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Caps</span>
+                  </Link>
+                  <Link to="/shop?category=belts" onClick={closeSidebar} className="text-center flex-shrink-0">
+                    <div className="w-16 h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-xl">🪢</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Belts</span>
+            </Link>
+                  <Link to="/shop?category=watches" onClick={closeSidebar} className="text-center flex-shrink-0">
+                    <div className="w-16 h-16 bg-gray-100 dark:bg-primary-800 rounded-lg mb-2 flex items-center justify-center">
+                      <span className="text-xl">⌚</span>
+                    </div>
+                    <span className="text-xs font-medium text-gray-800 dark:text-white">Watches</span>
+            </Link>
+                </div>
+              </div>
+
+              {/* Additional Links */}
+              <div className="px-4 pb-4">
+                <div className="space-y-1">
+            <Link
+                    to="/sale"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
+                  >
+                    <span className="font-medium">Sale</span>
+                    <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full">New Drops</span>
+            </Link>
+            <Link
+                    to="/subscriptions"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg"
+                  >
+                    <span className="font-medium">MY MEMBERSHIP</span>
+                    <FiChevronRight size={16} />
+            </Link>
+            <Link
+                    to="/orders"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
+                  >
+                    <span className="font-medium">Track My Order</span>
+                    <span className="text-red-500">📍</span>
+            </Link>
+                  <Link
+                    to="/about"
+                    onClick={closeSidebar}
+                    className="flex items-center justify-between py-3 px-2 text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-primary-800 rounded-lg"
+                  >
+                    <span className="font-medium">More</span>
+                    <FiChevronRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
